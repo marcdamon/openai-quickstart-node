@@ -30,8 +30,10 @@ export default async function (req, res) {
       model: "text-davinci-003",
       prompt: generatePrompt(animal),
       temperature: 0.6,
+      n: 5,
     });
-    res.status(200).json({ result: completion.data.choices[0].text });
+    const names = completion.data.choices.map((choice) => choice.text.trim()).join(', ');
+res.status(200).json({ result: names });
   } catch(error) {
     // Consider adjusting the error handling logic for your use case
     if (error.response) {
